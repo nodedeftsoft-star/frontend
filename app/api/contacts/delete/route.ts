@@ -1,0 +1,43 @@
+import { NextRequest, NextResponse } from "next/server";
+import api from "@/lib/api";
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const closr_authToken = req.cookies.get("closr_authToken")?.value;
+
+    if (!closr_authToken) {
+      return NextResponse.json({ message: "Unauthorized - No token provided" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { rolodexIds } = body;
+
+    //console.log('ROLDEX IDS', rolodexIds);
+    //console.log('AUTH TOKEN', closr_authToken);
+
+    if (!rolodexIds || !Array.isArray(rolodexIds)) {
+      return NextResponse.json({ message: "Invalid request - contactsIds array required" }, { status: 400 });
+    }
+
+    // Delete each buyer
+    const deletePromises = rolodexIds.map((id) =>
+      api.delete(`/rolodex/${id}`, {
+        headers: {
+          Authorization: `Bearer ${closr_authToken}`,
+        },
+      })
+    );
+
+    await Promise.all(deletePromises);
+
+    return NextResponse.json({ message: "Contacts deleted successfully" }, { status: 200 });
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+
+    if (error instanceof Error) {
+      return NextResponse.json({ message: "Failed to delete buyers", error: error.message }, { status: 400 });
+    }
+
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+  }
+}
