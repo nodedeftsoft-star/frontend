@@ -237,8 +237,8 @@ function SignupForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
               package: "full_saas",
-              successUrl: "https://closr-frontend-stagging.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}",
-              cancelUrl: "https://closr-frontend-stagging.vercel.app/pricing",
+              successUrl: "https://frontend-alpha-woad-96.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}",
+              cancelUrl: "https://frontend-alpha-woad-96.vercel.app/pricing",
               metadata: queryParams, // Pass all params as metadata
               userId: userId,
               customerId: data.data?.stripe_customer_id,
