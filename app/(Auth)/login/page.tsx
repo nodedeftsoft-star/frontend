@@ -54,6 +54,17 @@ function LoginForm() {
 
       setUser(data.user);
 
+      // Check if user has active subscription
+      if (!data.user.stripe_subscription_id || data.user.subscription_status !== 'active') {
+        toast("Login successful", {
+          description: "You need an active subscription to continue. Redirecting to pricing...",
+        });
+        toast("Please upgrade your plan to continue", {
+          description: "You need an active subscription to continue. Redirecting to pricing...",
+        });
+        return;
+      }
+
       // If plan param exists, redirect to Stripe checkout
       if (plan) {
         toast("Login successful", {
@@ -81,11 +92,11 @@ function LoginForm() {
           console.error("Checkout session error:", checkoutError);
         }
 
-        // Fallback to dashboard if checkout fails
+        // Fallback to pricing if checkout fails
         toast("Could not create checkout session", {
-          description: "Redirecting to dashboard instead...",
+          description: "Redirecting to pricing...",
         });
-        router.push("/");
+        router.push("/pricing");
       } else {
         toast("Login successful", {
           description: "Redirecting to dashboard...",

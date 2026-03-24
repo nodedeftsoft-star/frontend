@@ -1,27 +1,22 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { jwtDecode } from "jwt-decode";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("closr_authToken")?.value;
 
-  if (
-    !token &&
-    !req.nextUrl.pathname.includes("/api") &&
-    !req.nextUrl.pathname.includes("/login") &&
-    !req.nextUrl.pathname.includes("/signup") &&
-    !req.nextUrl.pathname.includes("/password-reset") &&
-    !req.nextUrl.pathname.includes("/payment-success") &&
-    !req.nextUrl.pathname.includes("/payment-cancelled")
-  ) {
+  // Public routes that don't require authentication
+  const publicRoutes = ["/api", "/login", "/signup", "/password-reset", "/payment-success", "/payment-cancelled", "/pricing"];
+
+  const isPublicRoute = publicRoutes.some(route => req.nextUrl.pathname.includes(route));
+
+  // Redirect to login if no token and trying to access protected route
+  if (!token && !isPublicRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (
-    token &&
-    (req.nextUrl.pathname.includes("/login") ||
-      req.nextUrl.pathname.includes("/signup") ||
-      req.nextUrl.pathname.includes("/password-reset"))
-  ) {
+  // If user has token and is trying to access auth routes, redirect to dashboard
+  if (token && (req.nextUrl.pathname.includes("/login") || req.nextUrl.pathname.includes("/signup") || req.nextUrl.pathname.includes("/password-reset"))) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 

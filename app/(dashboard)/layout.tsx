@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import UserStoreInitializer from "@/components/UserStoreInitializer";
+import { SubscriptionToast } from "@/components/SubscriptionToast";
 
 import type { User } from "@/store/user";
 import PageHeader from "@/components/ui/PageHeader";
@@ -16,7 +17,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <AppSidebar />
       <SidebarInset>
         <PageHeader />
-        <div className="flex flex-1 flex-col gap-4 pt-0 h-[calc(100vh-64px)]">{children}</div>
+        <div className="flex flex-1 flex-col gap-4 pt-0 h-[calc(100vh-64px)]">
+          <SubscriptionToast />
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
