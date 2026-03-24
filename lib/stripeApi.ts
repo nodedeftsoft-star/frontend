@@ -236,3 +236,5 @@ export const StripeErrorMessages = {
   SUBSCRIPTION_NOT_FOUND: "Subscription not found.",
   NETWORK_ERROR: "Network error. Please check your internet connection.",
 };
+
+//2

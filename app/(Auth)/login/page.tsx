@@ -65,7 +65,7 @@ function LoginForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              package: "full_saas",
+              package: plan,
               successUrl: "https://frontend-alpha-woad-96.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}",
               cancelUrl: "https://frontend-alpha-woad-96.vercel.app/pricing",
             }),
@@ -220,3 +220,5 @@ export default function Login() {
     </Suspense>
   );
 }
+
+//3

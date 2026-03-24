@@ -236,7 +236,7 @@ function SignupForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
-              package: "full_saas",
+              package: plan, // Use the plan from URL or default to "pro"
               successUrl: "https://frontend-alpha-woad-96.vercel.app/payment-success?session_id={CHECKOUT_SESSION_ID}",
               cancelUrl: "https://frontend-alpha-woad-96.vercel.app/pricing",
               metadata: queryParams, // Pass all params as metadata
@@ -544,3 +544,5 @@ export default function Signup() {
     </Suspense>
   );
 }
+
+//111
