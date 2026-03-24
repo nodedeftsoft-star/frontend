@@ -219,16 +219,7 @@ function SignupForm() {
         setUser(data.data);
       }
 
-      // Check if user has active subscription before proceeding
-      if (!data.data.stripe_subscription_id || data.data.subscription_status !== 'active') {
-        toast("Account created successfully!", {
-          description: "You need an active subscription to continue. Redirecting to pricing...",
-        });
-        toast("Please upgrade your plan to continue", {
-          description: "You need an active subscription to continue. Redirecting to pricing...",
-        });
-        return;
-      }
+
 
       // If plan param exists, redirect to Stripe checkout
       if (plan) {
