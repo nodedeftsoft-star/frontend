@@ -113,7 +113,7 @@ export default function PricingPage() {
     if (cancelled === 'true') {
       toast.error('Payment was cancelled. You can try again anytime.');
       // Clean up the URL
-      router.replace('/pricing', false);
+      router.replace('/pricing');
     }
   }, [searchParams, router]);
 
