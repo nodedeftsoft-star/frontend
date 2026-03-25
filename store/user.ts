@@ -9,6 +9,7 @@ export interface User {
   website: string;
   phoneNumber: string;
   createdAt: string;
+  stripe_customer_id?: string;
 }
 
 import { create } from "zustand";
