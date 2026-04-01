@@ -177,6 +177,16 @@ const PropertyDropdownContent = ({
                 context.setValue("targetAreas", [property?.address?.parentRegionName]);
                 context.setValue("bedroomCount", property?.bedrooms?.toString());
                 context.setValue("bathroomCount", property?.bathrooms?.toString());
+                
+                // Auto-fill max budget based on property mode and price
+                if (property?.price && property?.mode) {
+                  if (property.mode === "for-sale") {
+                    context.setValue("maxPurchasePrice", property.price);
+                  } else if (property.mode === "for-rent") {
+                    context.setValue("maxRentalPrice", property.price);
+                  }
+                }
+                
                 document.getElementById("property-trigger")?.click();
               }}
             >

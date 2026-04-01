@@ -236,8 +236,8 @@ export default function ViewMatchRentals({
 
       // After successful compensation save, update stage to Closed
       setCompensationModal(false);
-      queryClient.invalidateQueries({ queryKey: ["dashboard", "stats"] });
       await handleUpdateStage("Closed", true); // Skip confirmation since we already confirmed
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "stats"] });
     } catch (_error) {
       // console.error("Error saving compensation:", error);
       toast.error("An unexpected error occurred");
